@@ -1,0 +1,6 @@
+@OpenAI.DotNetLab.Api_HostAddress = http://localhost:8080
+
+GET {{OpenAI.DotNetLab.Api_HostAddress}}/scalar/v1
+Accept: application/json
+
+###
