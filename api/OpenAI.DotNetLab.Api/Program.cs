@@ -10,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddSingleton<ChatService>();
+builder.Services.AddSingleton<ImageService>();
+builder.Services.AddSingleton<RecipeService>();
 
 var app = builder.Build();
 
