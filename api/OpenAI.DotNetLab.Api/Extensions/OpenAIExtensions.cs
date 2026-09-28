@@ -10,8 +10,7 @@
             if (string.IsNullOrEmpty(apiKeySecret))
             {
                 throw new InvalidOperationException("OpenAI API key is not set in the environment variables.");
-            }
-            ;
+            };
 
             var openAIClient = new OpenAIClient(apiKeySecret);
             builder.Services.AddSingleton(openAIClient);

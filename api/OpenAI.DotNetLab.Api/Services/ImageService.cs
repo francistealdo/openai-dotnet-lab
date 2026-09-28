@@ -14,10 +14,10 @@ namespace OpenAI.DotNetLab.Api.Services
         }
 
         public async Task<byte[]> GenerateImageAsync(
-    string prompt,
-    string quality = "medium",
-    int width = 1024,
-    int height = 1024)
+            string prompt,
+            string quality = "medium",
+            int width = 1024,
+            int height = 1024)
         {
             var imageClient = _openAIClient.GetImageClient(_model);
 
@@ -25,13 +25,7 @@ namespace OpenAI.DotNetLab.Api.Services
             {
                 #pragma warning disable OPENAI001
 
-                Quality = quality.ToLowerInvariant() switch
-                {
-                    "low" => GeneratedImageQuality.LowQuality,
-                    "medium" => GeneratedImageQuality.MediumQuality,
-                    "high" => GeneratedImageQuality.High,
-                    _ => GeneratedImageQuality.Auto
-                },
+                Quality = GetQuality(quality),
                 Size = GetSize(width, height)
             };
 
@@ -40,12 +34,25 @@ namespace OpenAI.DotNetLab.Api.Services
             return response.Value.ImageBytes.ToArray();
         }
 
+        private GeneratedImageQuality GetQuality(string quality)
+        {
+            return quality.ToLowerInvariant() switch
+            {
+                "low" => GeneratedImageQuality.LowQuality,
+                "medium" => GeneratedImageQuality.MediumQuality,
+                "high" => GeneratedImageQuality.High,
+                "auto" => GeneratedImageQuality.Auto,
+                _ => throw new ArgumentException($"Invalid image quality: {quality}")
+            };
+        }
+
         private GeneratedImageSize GetSize(int width, int height)
         {
             return (width, height) switch
             {
-                (256, 256) => GeneratedImageSize.W1024xH1024,
-                (512, 512) => GeneratedImageSize.W512xH512,
+                (1024, 1024) => GeneratedImageSize.W1024xH1024,
+                (1024, 1536) => GeneratedImageSize.W1024xH1536,
+                (1536, 1024) => GeneratedImageSize.W1536xH1024,
                 _ => GeneratedImageSize.W1024xH1024
             };
         }

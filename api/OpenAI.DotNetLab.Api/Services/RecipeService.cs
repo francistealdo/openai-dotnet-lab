@@ -20,10 +20,27 @@ namespace OpenAI.DotNetLab.Api.Services
             var systemMessage = new SystemChatMessage("You are a professional chef that provides creative and easy-to-follow recipes based on user input.");
 
             var userMessage = new UserChatMessage($"""
-                I want to create recipe using the following ingredients: {ingredients}.
-                The cuisine type is {cuisine}.
-                Please consider the following dietary restrictions: {dietaryRestrictions}.
-                Please provide a detailed recipe including preparation steps, cooking time, and serving suggestions.
+                Create a recipe based on the following information:
+
+                Ingredients:
+                {ingredients}
+
+                Cuisine:
+                {cuisine}
+
+                Dietary restrictions:
+                {dietaryRestrictions}
+
+                Include:
+                - Recipe name
+                - Number of servings
+                - Ingredient quantities
+                - Preparation time
+                - Cooking time
+                - Step-by-step instructions
+                - Serving suggestions
+
+                Common pantry ingredients may be added when appropriate.
             """);
 
             var messages = new List<ChatMessage>
